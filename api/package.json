@@ -1,4 +1,5 @@
 {
+   "type": "module",
    "name": "OpenLetter",
    "version": "0.0.1",
    "description": "Awesome project developed with TypeORM.",
@@ -22,10 +23,12 @@
       "morgan": "^1.10.0",
       "pg": "^8.4.0",
       "reflect-metadata": "^0.1.10",
-      "typeorm": "0.2.32"
+      "typeorm": "0.2.32",
+      "typeorm-encrypted": "^0.5.6"
    },
    "scripts": {
       "start": "ts-node src/server.ts",
-      "dev": "ts-node-dev --respawn -- src/server.ts"
+      "dev": "ts-node-dev --respawn -- src/server.ts",
+      "typeorm": "ts-node ./node_modules/typeorm/cli.js"
    }
 }
