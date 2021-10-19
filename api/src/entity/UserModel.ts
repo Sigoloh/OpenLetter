@@ -1,7 +1,7 @@
 import Subscribers from './Subscribers';
 import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, OneToMany} from 'typeorm';
 import { EncryptionTransformer } from 'typeorm-encrypted';
-
+import 'dotenv';
 @Entity()
 export default class mailMan{
 
@@ -24,7 +24,7 @@ export default class mailMan{
             iv: `${process.env.PASSWOD_INICIALIZATION_VECTOR}`
         })
     })
-        senha: string;
+        password: string;
 
     @OneToMany(() => Subscribers, subscriber => subscriber.subscribed, {eager: true})
         subscribers: Subscribers[];
