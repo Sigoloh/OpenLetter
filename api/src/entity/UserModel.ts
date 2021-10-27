@@ -1,7 +1,9 @@
 import Subscribers from './Subscribers';
 import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, OneToMany} from 'typeorm';
 import { EncryptionTransformer } from 'typeorm-encrypted';
-import 'dotenv';
+// Todo: Remove this dotenv instantiation
+import * as dotenv from 'dotenv';
+dotenv.config();
 @Entity()
 export default class mailMan{
 
@@ -13,16 +15,9 @@ export default class mailMan{
     
     @Column({unique: true, nullable: false})
         email: string;
-    
     @Column({
         type: 'varchar',
         nullable: false,
-        transformer: new EncryptionTransformer({
-            key: `${process.env.PASSWORD_64}`,
-            algorithm: 'aes-256-cbc',
-            ivLength: 16,
-            iv: `${process.env.PASSWOD_INICIALIZATION_VECTOR}`
-        })
     })
         password: string;
 
