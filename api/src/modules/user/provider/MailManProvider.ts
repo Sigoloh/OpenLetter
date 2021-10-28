@@ -7,11 +7,11 @@ export default class MailMan {
         return {
             email,
             name,
-            password: bcrypt.hashSync(password, salt)
-        };
+            password: bcrypt.hashSync(password, salt),
+        }
     }
 
     public updatePassword(password: string){
-        return password
+        return password;
     }
 }
