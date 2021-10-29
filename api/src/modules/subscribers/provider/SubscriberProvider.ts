@@ -1,4 +1,4 @@
-import { ISubscriber } from "../implementations/ISubscriber";
+import { ISubscriber } from "../models/ISubscriber";
 
 export default class SubscriberProvider{
     constructor(){}

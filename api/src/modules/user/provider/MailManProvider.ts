@@ -1,4 +1,4 @@
-import { IMailMan } from '../implementations/IMailManProvider';
+import { IMailMan } from '../models/IMailManProvider';
 import * as bcrypt from 'bcrypt';
 export default class MailMan {
     public formatMailMan(email: string, name: string, password: string): IMailMan{

@@ -1,17 +1,27 @@
 import * as crypto from 'crypto';
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 export function input(input: string): string{
-    const key = crypto.createCipher('aes-128-cbc', process.env.ENCRIPT_HASH);
-
-    let encryptedContent = key.update(input, 'utf8', 'hex');
-
-    return (encryptedContent += key.final('hex'));
+    const bufferIv = Buffer.from(process.env.PASSWORD_INICIALIZATION_VECTOR, 'hex')
+    const bufferKey = Buffer.from(process.env.ENCRIPT_HASH, 'hex');
+    const bufferInput = Buffer.from(input);
+    const cipher = crypto.createCipheriv('aes-256-cbc', bufferKey, bufferIv);
+    let encrypted = cipher.update(bufferInput); 
+    encrypted = Buffer.concat([encrypted, cipher.final()]);
+    return (encrypted.toString('hex'));
 }
 
 
 export function output(input: string): string{
-    const key = crypto.createDecipher('aes-128-cbc', process.env.ENCRIPT_HASH);
+    console.log(`input pra decrypt = ${input}`)
+    const bufferIv = Buffer.from(process.env.PASSWORD_INICIALIZATION_VECTOR, 'hex')
+    const bufferKey = Buffer.from(process.env.ENCRIPT_HASH, 'hex');
+    const bufferInput = Buffer.from(input, 'hex');
+    console.log(`BufferInput = ${bufferInput}`)
+    const decipher = crypto.createDecipheriv('aes-256-cbc', bufferKey, bufferIv);
+    let decrypted = decipher.update(bufferInput);
+    decrypted = Buffer.concat([decrypted, decipher.final()]); 
 
-    let decryptedContent = key.update(input, 'hex', 'utf8');
-
-    return (decryptedContent += key.final('utf8'));
+    return decrypted.toString()
 }

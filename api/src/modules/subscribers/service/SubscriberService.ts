@@ -1,5 +1,5 @@
 import { getRepository } from 'typeorm';
-import { ISubscriber } from "../implementations/ISubscriber";
+import { ISubscriber } from "../models/ISubscriber";
 import  Subscribers  from "../../../entity/Subscribers";
 import SubscriberProvider from '../provider/SubscriberProvider';
 import mailMan from '../../../entity/UserModel';
@@ -21,7 +21,6 @@ export default class SubscriberService{
     private subscriberProvider = new SubscriberProvider();
 
 
-    // Todo: Acabar essa parte
     public async create(): Promise<void>{
         const newSubscriber = {} as Subscribers;
         newSubscriber.email =  input(this.subscriberProvider.formatEmail(this.email));
