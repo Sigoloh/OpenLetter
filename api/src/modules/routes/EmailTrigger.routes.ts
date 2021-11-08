@@ -4,9 +4,9 @@ import EmailTriggerController from '../emailTrigger/controller/emailTriggerContr
 const emailTriggerRoutes = Router();
 const emailTriggerController = new EmailTriggerController(); 
 emailTriggerRoutes.get('/test', (request: Request, response: Response) => {
-    response.json({
-        message: "Ta rolando ja"
-    });
+  response.json({
+    message: 'Ta rolando ja'
+  });
 });
 
 emailTriggerRoutes.post('/send', emailTriggerController.send);

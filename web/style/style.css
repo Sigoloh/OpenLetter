@@ -1,0 +1,84 @@
+body{
+    background: rgb(241, 241, 241) !important;
+}
+
+.navButtons{
+    display: flex;
+    flex-direction: row;
+    width: 90vw;
+    justify-content: end;
+}
+
+.navButtons a{
+    margin-left: 10px;
+}
+
+main{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+main .mainContent{
+    margin-top: 50px;
+    width: 90vw;
+    height: 150vh;
+}
+
+main .loginForm{
+    margin-top: 50px;
+    width: 50vw;
+    height: 72vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: top;
+}
+
+main .loginForm form{
+    background-color: #4c566a;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    max-width: 20vw;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+main .loginForm form button{
+    width: 10vw;;
+}
+
+main .loginForm form label{
+    color: rgb(241, 241, 241);
+    font-weight: 600;
+}
+
+main .loginForm form a{
+    color: rgb(241, 241, 241);
+    font-weight: 600;
+}
+
+
+main .mainContent h1{
+    text-align: center;
+
+}
+
+main .mainContent h3{
+    text-align: center;
+}
+
+main .mainContent h5{
+    text-align: justify;
+}
+
+footer{
+    height: 100%;
+    background-color: #212529;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 20px;
+}
