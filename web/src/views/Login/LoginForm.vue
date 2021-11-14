@@ -7,7 +7,7 @@
         <label for="Password" class="form-label">Password:</label>
         <input type="password" id="passwordInput" class="form-control" v-model="state.password"/>
         <button class="btn btn-success" id="submitLoginButton" @click="login">Login !</button>
-        <a href="/SignUp" style="text-align: center; margin-top: 5px; color: #00daff">Create your account now</a>
+        <a href="/sign-up" style="text-align: center; margin-top: 5px; color: #00daff">Create your account now</a>
     </div>
 </div>
 </template>
@@ -35,7 +35,7 @@ export default {
       )
       const date = new Date()
       const dateOneMore = DateManagement.addDays(1, date)
-      Cookies.set('Authorization', request.data.token, dateOneMore)
+      Cookies.set('Authorization', `Bearer ${request.data.token}`, dateOneMore)
       console.log(request.data)
     }
     return {

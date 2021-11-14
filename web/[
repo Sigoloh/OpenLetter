@@ -1,0 +1,5 @@
+require('dotenv).config()
+export const redirectUser = (location) => {
+  console.log(`${process.env.VUE_APP_URL}/${location}`)
+  window.location = `${process.env.BASE_URL}${location}`
+}
