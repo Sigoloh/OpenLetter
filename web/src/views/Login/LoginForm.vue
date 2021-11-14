@@ -15,6 +15,8 @@
 <script>
 import { reactive } from '@vue/reactivity'
 import axios from 'axios'
+import { Cookies } from '../../../utils/Cookies'
+import { DateManagement } from '../../../utils/DateManagement'
 const instance = axios.create({
   baseURL: 'http://localhost:3000'
 })
@@ -31,6 +33,9 @@ export default {
           password: state.password
         }
       )
+      const date = new Date()
+      const dateOneMore = DateManagement.addDays(1, date)
+      Cookies.set('Authorization', request.data.token, dateOneMore)
       console.log(request.data)
     }
     return {
