@@ -7,7 +7,7 @@
         <label for="Password" class="form-label">Password:</label>
         <input type="password" id="passwordInput" class="form-control" v-model="state.password"/>
         <button class="btn btn-success" id="submitLoginButton" @click="login">Login !</button>
-        <a href="/SignUp" style="text-align: center; margin-top: 5px; color: #00daff">Create your account now</a>
+        <a href="/sign-up" style="text-align: center; margin-top: 5px; color: #00daff">Create your account now</a>
     </div>
 </div>
 </template>
@@ -15,6 +15,8 @@
 <script>
 import { reactive } from '@vue/reactivity'
 import axios from 'axios'
+import { Cookies } from '../../../utils/Cookies'
+import { DateManagement } from '../../../utils/DateManagement'
 const instance = axios.create({
   baseURL: 'http://localhost:3000'
 })
@@ -31,6 +33,9 @@ export default {
           password: state.password
         }
       )
+      const date = new Date()
+      const dateOneMore = DateManagement.addDays(1, date)
+      Cookies.set('Authorization', `Bearer ${request.data.token}`, dateOneMore)
       console.log(request.data)
     }
     return {

@@ -2,8 +2,9 @@
 <nav class="navbar navbar-dark bg-dark">
 <a href="/" style="text-decoration: none"><h3>Open Letter</h3></a>
 <div class="NavButtonBox">
-    <a href="/login" class="btn btn-primary">Start Now!</a>
-    <a href="https://github.com/Sigoloh/OpenLetter" target="blank" class="btn btn-secondary">Github</a>
+    <a href="/dashboard" class="btn btn-primary">Overview</a>
+    <a href="/dashboard/analytics" class="btn btn-primary">Analytics</a>
+    <a href="/dashboard/send-letter" class="btn btn-warning">Send Letter</a>
 </div>
 </nav>
 </template>
