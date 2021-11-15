@@ -5,13 +5,22 @@
     <a href="/dashboard" class="btn btn-primary">Overview</a>
     <a href="/dashboard/analytics" class="btn btn-primary">Analytics</a>
     <a href="/dashboard/send-letter" class="btn btn-warning">Send Letter</a>
+    <button @click="logOut()" class="btn btn-danger">Logout</button>
 </div>
 </nav>
 </template>
 
 <script>
+import { Cookies } from '../../../utils/Cookies'
+import { redirectUser } from '../../../utils/redirectUser'
 export default {
-
+  setup () {
+    function logOut () {
+      Cookies.delete('Authorization')
+      redirectUser('/')
+    }
+    return { logOut }
+  }
 }
 </script>
 
