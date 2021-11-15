@@ -1,4 +1,4 @@
-<template>
+<template #default>
   <div class="sendMailBody" v-if="!state.previewMode">
       <h1>Send letter</h1>
       <div class="letterForm">
@@ -6,7 +6,7 @@
         <a class="btn btn-success" @click="changePreviewMode()">Preview</a>
       </div>
   </div>
-  <div class="previewEmailBox" v-if="state.previewMode">
+  <div class="previewEmailBox" v-else>
       <h1 class="previewTitle">Preview</h1>
       <div class="emailBody" v-html="state.emailBody"></div>
       <button class="btn btn-danger" @click="changePreviewMode()">Rewrite</button>
@@ -18,6 +18,7 @@
 import { reactive } from '@vue/reactivity'
 import axios from 'axios'
 import { Cookies } from '../../../../utils/Cookies'
+import { onBeforeMount } from '@vue/runtime-core'
 const instance = axios.create({
   baseURL: 'http://localhost:3000'
 })
@@ -25,9 +26,14 @@ export default {
   setup () {
     const state = reactive({
       emailBody: '',
-      previewMode: false
+      previewMode: false,
+      authenticated: false
     })
-    function changePreviewMode () {
+    async function setAuthenticated () {
+      const authorizationCookie = Cookies.get('Authorization')
+      const { data } = await instance.get('/users/authenticate', { headers: { Authorization: authorizationCookie } })
+      state.authenticated = data.authenticated
+    } function changePreviewMode () {
       state.previewMode = !state.previewMode
     }
     async function sendMail () {
@@ -39,12 +45,16 @@ export default {
         { headers: { Authorization: token } })
       console.log(sendMailRequest.data)
     }
+    onBeforeMount(setAuthenticated())
     return { state, changePreviewMode, sendMail }
   }
 }
 </script>
 
 <style>
+body {
+  height: 100%;
+}
 .sendMailBody{
   margin: 2vw 5vw 2vw 5vw;
 }
