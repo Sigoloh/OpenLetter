@@ -12,7 +12,7 @@ export default class EmailTriggerService{
   ){
   }
 
-  async sendMail(){
+  async sendMail(email_body: string){
        
     const emailList = [''];
     const mailMan = await this.emailTriggerProvider.getMailManData(this.mailManId);
@@ -22,7 +22,7 @@ export default class EmailTriggerService{
         from: `<${mailMan.email}>`,
         to: `<${output(subscriber.email)}>`,
         subject: 'Testando Mailhog',
-        html: '<h1>Funcionou!</h1>'
+        html: email_body 
       });
     } 
   }

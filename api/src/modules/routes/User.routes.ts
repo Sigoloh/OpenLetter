@@ -11,8 +11,13 @@ userRoutes.post('/create', mailManController.create);
 
 userRoutes.patch('/updatePassword', authenticate, mailManController.update);
 
-userRoutes.get('/get/:mailManId', mailManController.get);
+userRoutes.get('/get', mailManController.get);
 
 userRoutes.post('/login', mailManController.login);
 
+userRoutes.get('/authenticate', authenticate, mailManController.authenticate)
+
+userRoutes.patch('/setSubMessage', authenticate, mailManController.setSubMessage)
+
+userRoutes.get('/getSubMessage', mailManController.getSubMessage)
 export default userRoutes;

@@ -1,7 +1,7 @@
-import { CreateRelationShipBetweenMaillersAndSubscribers1634597010566 } from './../../../database/migration/1634597010566-CreateRelationShipBetweenMaillersAndSubscribers';
 import { Request, Response } from 'express';
 import MailMan from '../provider/MailManProvider';
 import MailManService from '../services/MailManService';
+import {extractJwtInfo} from '../utils/extractJwtInfo';
 
 export class MailManController{
   constructor(
@@ -41,11 +41,13 @@ export class MailManController{
 
   async get(request: Request, response: Response){ 
     try {
-      const { mailManId } = request.params;
-      const mailManService = new MailManService('', '', '', '', mailManId);
+      const [, authorizationHeader] = request.header('Authorization').split(' ');
+      const authorizationInfo = extractJwtInfo(authorizationHeader)
+      const mailManService = new MailManService('', '', '', '', authorizationInfo.id);
       const foundUser = await mailManService.get();
       response.status(200).json(foundUser);
     } catch (error) {
+      console.log(error)
       response.status(500).json({
         message: 'Error'
       });
@@ -58,13 +60,14 @@ export class MailManController{
       const mailManService = new MailManService('', email, password);
       const loginUser = await mailManService.login();
       if(loginUser !== 'error'){
+        response.header('Set-Cookie',`Authorization=Bearer ${loginUser}`)
         response.status(200).json({
           message: 'ok',
           token: loginUser
         });
       }else{
-        response.status(403).json({
-          message: 'ok',
+        response.status(200).json({
+          message: 'Ok',
           token: 'Wrong Password'
         });
       }
@@ -75,5 +78,36 @@ export class MailManController{
         message: 'error'
       });
     }
+  }
+  async authenticate(request: Request, response: Response){
+    const mailManService = new MailManService()
+    const authorizationHeader = request.header('Authorization')
+    const authenticationResponse = await mailManService.authenticate(authorizationHeader)
+    console.log(authenticationResponse)
+    response.status(200).json({
+      message: 'Ok',
+      authenticated: authenticationResponse,
+    })
+
+  }
+  async setSubMessage(request: Request, response: Response): Promise<void>{
+    const { subMessage } = request.body
+    const [, jwtToken] = request.header('Authorization').split(' ') 
+    const idFromAuthorization = extractJwtInfo(jwtToken).id
+    const mailManService = new MailManService('', '', '', '', subMessage, idFromAuthorization)
+    await mailManService.update()
+    response.status(200).json({
+      message: "ok",
+    })
+  }
+  async getSubMessage(request: Request, response: Response): Promise<void>{
+    const [, authorizationHeader] = request.header('Authorization').split(' ');
+    const authorizationInfo = extractJwtInfo(authorizationHeader)
+    const mailManService = new MailManService('', '', '', '', authorizationInfo.id);
+    const subMsg = await mailManService.getSubmessage()
+    response.status(200).json({
+      message: 'ok',
+      subMsg
+    })
   }
 }

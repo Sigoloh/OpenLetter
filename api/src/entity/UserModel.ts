@@ -1,6 +1,5 @@
 import Subscribers from './Subscribers';
 import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, OneToMany} from 'typeorm';
-import { EncryptionTransformer } from 'typeorm-encrypted';
 // Todo: Remove this dotenv instantiation
 import * as dotenv from 'dotenv';
 dotenv.config();
@@ -8,30 +7,36 @@ dotenv.config();
 export default class mailMan{
 
     @PrimaryGeneratedColumn('uuid')
-        id: number;
+      id: number;
     
     @Column({nullable: false})
-        name: string;
+      name: string;
     
     @Column({unique: true, nullable: false})
-        email: string;
+      email: string;
     @Column({
-        type: 'varchar',
-        nullable: false,
+      type: 'varchar',
+      nullable: false,
     })
-        password: string;
+      password: string;
 
     @OneToMany(() => Subscribers, subscriber => subscriber.subscribed, {eager: true})
-        subscribers: Subscribers[];
+      subscribers: Subscribers[];
 
     @CreateDateColumn({nullable: false})
-        createdAt: string;
+      createdAt: string;
     
     @UpdateDateColumn({nullable: false})
-        updatedAt: string;
+      updatedAt: string;
 
     @DeleteDateColumn({nullable: false})
-        deletedAt: string;
+      deletedAt: string;
+
+      @Column({
+        type: 'varchar',
+        nullable: true,
+      })
+        subscriberMessage: string;
 
 
 }
