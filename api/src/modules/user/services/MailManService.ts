@@ -10,6 +10,7 @@ export default class MainManService{
         private email?: string,
         private password?: string,
         private newPassword?: string,
+        private subPageMessage?: string,
         private mailManId?: string,
     ){}
 
@@ -28,13 +29,25 @@ export default class MainManService{
 
     async update(): Promise<void>{
         const userToBeUpated = await this.mailManRepo.findOneOrFail(this.mailManId);
-        userToBeUpated.password = this.newPassword;
-        await this.mailManRepo.save(userToBeUpated);
+        if (this.newPassword){
+          userToBeUpated.password = this.newPassword;
+          await this.mailManRepo.save(userToBeUpated);
+
+        }else if(this.subPageMessage){
+          userToBeUpated.subscriberMessage = this.subPageMessage;
+          await this.mailManRepo.save(userToBeUpated)
+        }
     }
 
     async get(): Promise<mailMan>{
-        const userToBeFound = await this.mailManRepo.findOneOrFail(this.mailManId);
-        return userToBeFound;
+      const userToBeFound = await this.mailManRepo.findOneOrFail(this.mailManId);
+      return userToBeFound;
+    }
+
+    async getSubmessage(): Promise<string>{
+      const subMsgOfUser = await this.mailManRepo.findOneOrFail(this.mailManId);
+      return subMsgOfUser.subscriberMessage
+
     }
 
     async login(): Promise<string>{
@@ -46,6 +59,16 @@ export default class MainManService{
         }else{
             return 'error';
         }
+    }
+    async authenticate(authorization_header: string): Promise<boolean>{
+      const [, jwtToken] = authorization_header.split(' ');
+      let authenticated = false;
+      jwt.verify(jwtToken, process.env.ENCRIPT_HASH, (err)=>{
+        if(!err){
+          authenticated = true 
+        }
+      })
+      return authenticated;
     }
 
 }

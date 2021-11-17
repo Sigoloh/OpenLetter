@@ -5,7 +5,6 @@ export default async function authenticate(request: Request, response: Response,
     const [, token] = request.headers.authorization.split(' ');
     jwt.verify(token, process.env.ENCRIPT_HASH, (err, payload) => {
         if (!err) {
-          console.log(payload.id);
           if(request.body.mailManId === payload.id){
             next();
           }else{
