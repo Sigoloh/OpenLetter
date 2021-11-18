@@ -5,6 +5,7 @@
     <h3>Overview</h3>
     <h5>Subscribers: {{state.subscribers.length}}</h5>
     <h5>Letters sent: to be implemented</h5>
+    <h5>Write your subscribe page message!</h5>
 </div>
 </template>
 
